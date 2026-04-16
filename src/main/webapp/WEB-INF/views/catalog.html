@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh muc thiet bi va phong Lab</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .section-title {
+            color: white;
+            font-size: 2em;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid white;
+        }
+
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .item-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            overflow: hidden;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .item-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .item-name {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+
+        .item-description {
+            font-size: 0.95em;
+            color: #666;
+            margin-bottom: 15px;
+            flex-grow: 1;
+            line-height: 1.5;
+        }
+
+        .item-quantity {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .quantity-label {
+            color: #555;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+
+        .quantity-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+            background: #f0f0f0;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        .quantity-value.low {
+            color: #ff6b6b;
+        }
+
+        .quantity-value.medium {
+            color: #ffa500;
+        }
+
+        .quantity-value.high {
+            color: #51cf66;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: white;
+            padding: 40px;
+            font-size: 1.2em;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid white;
+        }
+
+        .back-button:hover {
+            background: transparent;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .items-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .section-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Danh muc he thong quan ly thiet bi</h1>
+        <p>Xem danh sach cac thiet bi va phong Lab co san</p>
+    </div>
+
+    <div th:if="${devices != null and devices.size() > 0}">
+        <h2 class="section-title">Thiet bi co san</h2>
+        <div class="items-grid">
+            <div class="item-card" th:each="device : ${devices}">
+                <div class="item-image">
+                    <img th:src="${device.image}" th:alt="${device.name}" onerror="this.style.display='none'">
+                    <span th:if="${device.image == null or device.image == ''}">Device</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-name" th:text="${device.name}">Device Name</div>
+                    <div class="item-quantity">
+                        <span class="quantity-label">So luong con:</span>
+                        <span class="quantity-value"
+                              th:classappend="${device.quantityAvailable <= 2} ? 'low' : ${device.quantityAvailable <= 5} ? 'medium' : 'high'"
+                              th:text="${device.quantityAvailable}">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${devices == null or devices.size() == 0}" class="empty-message">
+        Hien khong co thiet bi nao trong he thong
+    </div>
+
+    <div th:if="${rooms != null and rooms.size() > 0}">
+        <h2 class="section-title">Phong Lab co san</h2>
+        <div class="items-grid">
+            <div class="item-card" th:each="room : ${rooms}">
+                <div class="item-image">
+                    <img th:src="${room.image}" th:alt="${room.name}" onerror="this.style.display='none'">
+                    <span th:if="${room.image == null or room.image == ''}">Lab</span>
+                </div>
+                <div class="item-info">
+                    <div class="item-name" th:text="${room.name}">Room Name</div>
+                    <div class="item-description" th:text="${room.description}">Room description</div>
+                    <div class="item-quantity">
+                        <span class="quantity-label">Suc chua:</span>
+                        <span class="quantity-value" th:text="${room.capacity} + ' nguoi'">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:if="${rooms == null or rooms.size() == 0}" class="empty-message">
+        Hien khong co phong Lab nao trong he thong
+    </div>
+
+    <div style="text-align: center; margin-top: 40px;">
+        <a href="/" class="back-button">Quay lai trang chu</a>
+    </div>
+</div>
+</body>
+</html>

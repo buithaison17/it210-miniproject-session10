@@ -4,6 +4,7 @@ public class LabRoom {
     private String id;
     private String name;
     private String description;
+    private String image;
     private int capacity;
 
     public LabRoom(String id, String name, String description, int capacity) {
@@ -35,6 +36,14 @@ public class LabRoom {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public int getCapacity() {

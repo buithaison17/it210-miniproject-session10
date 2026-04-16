@@ -3,11 +3,13 @@ package org.example.it210miniprojectsession09.model.entity;
 public class Device {
     private String id;
     private String name;
+    private String image;
     private int quantityAvailable;
 
-    public Device(String id, String name, int quantityAvailable) {
+    public Device(String id, String name, String image, int quantityAvailable) {
         this.id = id;
         this.name = name;
+        this.image = image;
         this.quantityAvailable = quantityAvailable;
     }
 
@@ -25,6 +27,14 @@ public class Device {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public int getQuantityAvailable() {
