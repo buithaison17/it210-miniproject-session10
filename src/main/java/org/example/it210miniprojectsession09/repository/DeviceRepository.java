@@ -5,17 +5,36 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class DeviceRepository {
-    private static final List<Device> devices = new ArrayList<>();
 
-    static {
-        devices.add(new Device("1", "Man hinh Dell", "/images/monitor.jpg", 5));
-        devices.add(new Device("2", "Cap HDMI", "/images/hdmi.jpg", 10));
-    }
+    private final List<Device> devices = new ArrayList<>();
+    private Long nextId = 1L;
 
     public List<Device> findAll() {
         return devices;
+    }
+
+    public Optional<Device> findById(Long id) {
+        return devices.stream().filter(d -> d.getId().equals(id)).findFirst();
+    }
+
+    public void save(Device device) {
+        if (device.getId() == null) {
+            device.setId(nextId++);
+            devices.add(device);
+        } else {
+            // update
+            findById(device.getId()).ifPresent(existing -> {
+                existing.setName(device.getName());
+                existing.setQuantityAvailable(device.getQuantityAvailable());
+            });
+        }
+    }
+
+    public void deleteById(Long id) {
+        devices.removeIf(d -> d.getId().equals(id));
     }
 }

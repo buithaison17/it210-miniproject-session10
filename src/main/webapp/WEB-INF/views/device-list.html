@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main-layout}">
+<head>
+    <title>Danh sach thiet bi</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="mt-4">
+        <h2 class="mb-3 text-primary">Danh sach thiet bi</h2>
+
+        <div class="mb-3">
+            <a th:href="@{/admin/device/add}" class="btn btn-success">+ Them thiet bi moi</a>
+        </div>
+
+        <table class="table table-striped table-hover shadow-sm">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Ten thiet bi</th>
+                <th scope="col">So luong</th>
+                <th scope="col">Hanh dong</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="device : ${devices}">
+                <td th:text="${device.id}"></td>
+                <td th:text="${device.name}"></td>
+                <td th:text="${device.quantityAvailable}"></td>
+                <td>
+                    <a th:href="@{/admin/device/edit/{id}(id=${device.id})}" class="btn btn-sm btn-warning">Sua</a>
+                    <a th:href="@{/admin/device/delete/{id}(id=${device.id})}"
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('Ban co chac muon xoa?')">Xoa</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

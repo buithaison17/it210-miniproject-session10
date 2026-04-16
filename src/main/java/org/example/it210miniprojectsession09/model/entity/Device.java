@@ -1,23 +1,32 @@
 package org.example.it210miniprojectsession09.model.entity;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "devices")
 public class Device {
-    private String id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String name;
-    private String image;
+
     private int quantityAvailable;
 
-    public Device(String id, String name, String image, int quantityAvailable) {
+    public Device() {}
+
+    public Device(Long id, String name, int quantityAvailable) {
         this.id = id;
         this.name = name;
-        this.image = image;
         this.quantityAvailable = quantityAvailable;
     }
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -27,14 +36,6 @@ public class Device {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     public int getQuantityAvailable() {
