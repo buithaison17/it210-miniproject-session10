@@ -15,7 +15,7 @@
 <body>
 <div layout:fragment="content" class="flex justify-content-center">
     <h1 class="text-center">Đăng ký muợn thiết bị/ phòng thí nghiệm</h1>
-    <form th:action="@{/student/borrow}" method="post" th:object="${borrowDto}">
+    <form th:action="@{/student/borrow/{borrow_id}(borrow_id=${borrowDto.deviceOrLabRoomId})}" method="post" th:object="${borrowDto}">
         <div class="d-flex flex-column gap-1">
             <label for="studentName">Họ tên sinh viên</label>
             <input th:field="*{studentName}" type="text" class="form-control" id="studentName"
@@ -55,7 +55,7 @@
         </div>
         <div>
             <label for="borrowId">Mã thiết bị/ mã phòng</label>
-            <input type="text" id="borrowId" th:field="*{deviceOrLabRoomId}" class="form-control">
+            <input type="text" id="borrowId" readonly th:field="*{deviceOrLabRoomId}" class="form-control">
             <p th:if="${#fields.hasErrors('deviceOrLabRoomId')}" th:errors="*{deviceOrLabRoomId}"
                class="text-danger"></p>
         </div>
