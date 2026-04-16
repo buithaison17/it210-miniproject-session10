@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/main-layout}"
+>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,35 +12,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-
-        body {
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header {
-            text-align: center;
-            color: white;
-            margin-bottom: 40px;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .header p {
-            font-size: 1.1em;
-            opacity: 0.9;
         }
 
         .section-title {
@@ -190,62 +164,105 @@
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <h1>Danh muc he thong quan ly thiet bi</h1>
-        <p>Xem danh sach cac thiet bi va phong Lab co san</p>
-    </div>
+<div layout:fragment="content">
+    <p th:if="${message}" th:text="${message}" class="text-success"></p>
+    <!-- DEVICES -->
+    <div th:if="${not #lists.isEmpty(devices)}">
+        <h2 class="section-title">Thiết bị có sẵn</h2>
 
-    <div th:if="${devices != null and devices.size() > 0}">
-        <h2 class="section-title">Thiet bi co san</h2>
         <div class="items-grid">
-            <div class="item-card" th:each="device : ${devices}">
+            <div th:onclick="|window.location.href='@{/student/form-borrow/{borrow_id}(borrow_id=${device.id})}'|"
+                 class="item-card"
+                 th:each="device : ${devices}">
+
                 <div class="item-image">
-                    <img th:src="${device.image}" th:alt="${device.name}" onerror="this.style.display='none'">
-                    <span th:if="${device.image == null or device.image == ''}">Device</span>
+                    <img th:if="${device.image != null and device.image != ''}"
+                         th:src="${device.image}"
+                         th:alt="${device.name}"
+                         onerror="this.style.display='none'"/>
+
+                    <span th:if="${device.image == null or device.image == ''}">
+                        Device
+                    </span>
                 </div>
+
                 <div class="item-info">
-                    <div class="item-name" th:text="${device.name}">Device Name</div>
+                    <div class="item-name" th:text="${device.name}">
+                        Device Name
+                    </div>
+
                     <div class="item-quantity">
-                        <span class="quantity-label">So luong con:</span>
+                        <span class="quantity-label">Số lượng còn:</span>
+
                         <span class="quantity-value"
-                              th:classappend="${device.quantityAvailable <= 2} ? 'low' : ${device.quantityAvailable <= 5} ? 'medium' : 'high'"
-                              th:text="${device.quantityAvailable}">0</span>
+                              th:text="${device.quantityAvailable}"
+                              th:classappend="${
+                                  device.quantityAvailable <= 2 ? 'low' :
+                                  (device.quantityAvailable <= 5 ? 'medium' : 'high')
+                              }">
+                            0
+                        </span>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
-    <div th:if="${devices == null or devices.size() == 0}" class="empty-message">
-        Hien khong co thiet bi nao trong he thong
+
+    <div th:if="${#lists.isEmpty(devices)}" class="empty-message">
+        Hiện không có thiết bị nào trong hệ thống
     </div>
 
-    <div th:if="${rooms != null and rooms.size() > 0}">
-        <h2 class="section-title">Phong Lab co san</h2>
+    <!-- ROOMS -->
+    <div th:if="${not #lists.isEmpty(rooms)}">
+        <h2 class="section-title">Phòng Lab có sẵn</h2>
+
         <div class="items-grid">
             <div class="item-card" th:each="room : ${rooms}">
+
                 <div class="item-image">
-                    <img th:src="${room.image}" th:alt="${room.name}" onerror="this.style.display='none'">
-                    <span th:if="${room.image == null or room.image == ''}">Lab</span>
+                    <img th:if="${room.image != null and room.image != ''}"
+                         th:src="${room.image}"
+                         th:alt="${room.name}"
+                         onerror="this.style.display='none'"/>
+
+                    <span th:if="${room.image == null or room.image == ''}">
+                        Lab
+                    </span>
                 </div>
+
                 <div class="item-info">
-                    <div class="item-name" th:text="${room.name}">Room Name</div>
-                    <div class="item-description" th:text="${room.description}">Room description</div>
+                    <div class="item-name" th:text="${room.name}">
+                        Room Name
+                    </div>
+
+                    <div class="item-description" th:text="${room.description}">
+                        Room description
+                    </div>
+
                     <div class="item-quantity">
-                        <span class="quantity-label">Suc chua:</span>
-                        <span class="quantity-value" th:text="${room.capacity} + ' nguoi'">0</span>
+                        <span class="quantity-label">Sức chứa:</span>
+
+                        <span class="quantity-value"
+                              th:text="${room.capacity + ' người'}">
+                            0
+                        </span>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
-    <div th:if="${rooms == null or rooms.size() == 0}" class="empty-message">
-        Hien khong co phong Lab nao trong he thong
+
+    <div th:if="${#lists.isEmpty(rooms)}" class="empty-message">
+        Hiện không có phòng Lab nào trong hệ thống
     </div>
 
-    <div style="text-align: center; margin-top: 40px;">
-        <a href="/" class="back-button">Quay lai trang chu</a>
+    <!-- BACK BUTTON -->
+    <div style="text-align:center; margin-top:40px;">
+        <a href="/" class="back-button">Quay lại trang chủ</a>
     </div>
+
 </div>
 </body>
 </html>
