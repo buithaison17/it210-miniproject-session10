@@ -7,6 +7,6 @@ public class StudentCodeValidation implements ConstraintValidator<StudentCodeVal
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         if (value == null) return false;
-        return value.startsWith("VN_");
+        return value.startsWith("SV_");
     }
 }

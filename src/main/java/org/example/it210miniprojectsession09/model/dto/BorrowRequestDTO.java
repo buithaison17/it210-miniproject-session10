@@ -1,6 +1,7 @@
 package org.example.it210miniprojectsession09.model.dto;
 
 import jakarta.validation.constraints.*;
+import org.example.it210miniprojectsession09.annotation.OutOfQuantity;
 import org.example.it210miniprojectsession09.annotation.StartDateLessThanEndDateValid;
 import org.example.it210miniprojectsession09.annotation.StudentCodeValid;
 import org.example.it210miniprojectsession09.type.RequestStatus;
@@ -8,6 +9,7 @@ import org.example.it210miniprojectsession09.type.RequestStatus;
 import java.time.LocalDate;
 
 @StartDateLessThanEndDateValid(message = "Ngày bắt đầu phải nhỏ hơn ngày kết thúc")
+@OutOfQuantity(message = "Không đủ số lượng")
 public class BorrowRequestDTO {
     @NotBlank(message = "Tên sinh viên không được để trống")
     private String studentName;
@@ -16,9 +18,11 @@ public class BorrowRequestDTO {
     @StudentCodeValid(message = "Mã sinh viên phải bắt đầu bằng SV_")
     private String studentCode;
 
+    @NotBlank(message = "Email không được để trống")
     @Email(message = "Email không hợp lệ")
     private String email;
 
+    @NotNull(message = "Số lượng không được để trống")
     @Min(value = 1, message = "Số lượng phải lớn hơn 0")
     private Integer quantity;
 

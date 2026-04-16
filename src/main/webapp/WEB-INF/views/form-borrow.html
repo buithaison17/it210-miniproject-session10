@@ -13,8 +13,60 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<div layout:fragment="content">
-    <h1>Form</h1>
+<div layout:fragment="content" class="flex justify-content-center">
+    <h1 class="text-center">Đăng ký muợn thiết bị/ phòng thí nghiệm</h1>
+    <form th:action="@{/student/borrow}" method="post" th:object="${borrowDto}">
+        <div class="d-flex flex-column gap-1">
+            <label for="studentName">Họ tên sinh viên</label>
+            <input th:field="*{studentName}" type="text" class="form-control" id="studentName"
+                   placeholder="Nhập họ và tên">
+            <p th:if="${#fields.hasErrors('studentName')}" th:errors="*{studentName}" class="text-danger"></p>
+        </div>
+        <div>
+            <label for="studentId">Mã sinh viên</label>
+            <input th:field="*{studentCode}" type="text" class="form-control" id="studentId"
+                   placeholder="Nhập mã sinh viên">
+            <p th:field="${#fields.hasErrors('studentCode')}" th:errors="*{studentCode}" class="text-danger"></p>
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" id="email" th:field="*{email}" placeholder="Nhập Email" class="form-control">
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></p>
+        </div>
+        <div>
+            <label for="quantity">Số lượng</label>
+            <input type="number" id="quantity" th:field="*{quantity}" placeholder="Nhập số lượng" class="form-control">
+            <p th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}" class="text-danger"></p>
+        </div>
+        <div>
+            <label for="startDate">Ngày bắt đầu</label>
+            <input type="date" id="startDate" class="form-control" th:field="*{startDate}">
+            <p th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}" class="text-danger"></p>
+        </div>
+        <div>
+            <label for="endDate">Ngày kết thúc</label>
+            <input type="date" id="endDate" class="form-control" th:field="*{endDate}">
+            <p th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}" class="text-danger"></p>
+        </div>
+        <div>
+            <label for="reason">Lí do mượn</label>
+            <textarea id="reason" class="form-control" th:field="*{reason}"></textarea>
+            <p th:if="${#fields.hasErrors('reason')}" th:errors="*{reason}" class="text-danger"></p>
+        </div>
+        <div>
+            <label for="borrowId">Mã thiết bị/ mã phòng</label>
+            <input type="text" id="borrowId" th:field="*{deviceOrLabRoomId}" class="form-control">
+            <p th:if="${#fields.hasErrors('deviceOrLabRoomId')}" th:errors="*{deviceOrLabRoomId}"
+               class="text-danger"></p>
+        </div>
+        <div class="mt-3 d-flex justify-content-between">
+            <a href="/student/catalog" class="btn btn-secondary">Quay lại</a>
+            <div>
+                <button type="reset" class="btn btn-secondary">Làm mới</button>
+                <button type="submit" class="btn btn-primary">Đăng ký</button>
+            </div>
+        </div>
+    </form>
 </div>
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
