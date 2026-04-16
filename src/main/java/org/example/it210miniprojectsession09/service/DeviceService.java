@@ -11,8 +11,7 @@ public class DeviceService {
         this.deviceRepository = deviceRepository;
     }
 
-    public Integer getQuantity(String deviceId) {
-        return deviceRepository.findAll().stream().filter(d -> d.getId()
-                .equals(deviceId)).findFirst().get().getQuantityAvailable();
+    public Integer getQuantity(Long deviceId) {
+        return deviceRepository.findAll().stream().filter(p -> p.getId() == deviceId).findFirst().get().getQuantityAvailable();
     }
 }
