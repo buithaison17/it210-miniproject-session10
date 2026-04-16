@@ -36,15 +36,15 @@ public class BorrowRequestDTO {
     @NotBlank(message = "Lý do mượn không được để trống")
     private String reason;
 
-    @NotBlank(message = "Mã thiết bị hoặc phòng thí nghiệm không được để trống")
-    private String deviceOrLabRoomId;
+    @NotNull(message = "Mã thiết bị hoặc phòng thí nghiệm không được để trống")
+    private Long deviceOrLabRoomId;
 
     private RequestStatus status;
 
     public BorrowRequestDTO() {
     }
 
-    public BorrowRequestDTO(String studentName, String studentCode, String email, Integer quantity, LocalDate startDate, LocalDate endDate, String reason, String deviceOrLabRoomId, RequestStatus status) {
+    public BorrowRequestDTO(String studentName, String studentCode, String email, Integer quantity, LocalDate startDate, LocalDate endDate, String reason, Long deviceOrLabRoomId, RequestStatus status) {
         this.studentName = studentName;
         this.studentCode = studentCode;
         this.email = email;
@@ -112,11 +112,11 @@ public class BorrowRequestDTO {
         this.reason = reason;
     }
 
-    public String getDeviceOrLabRoomId() {
+    public Long getDeviceOrLabRoomId() {
         return deviceOrLabRoomId;
     }
 
-    public void setDeviceOrLabRoomId(String deviceOrLabRoomId) {
+    public void setDeviceOrLabRoomId(Long deviceOrLabRoomId) {
         this.deviceOrLabRoomId = deviceOrLabRoomId;
     }
 

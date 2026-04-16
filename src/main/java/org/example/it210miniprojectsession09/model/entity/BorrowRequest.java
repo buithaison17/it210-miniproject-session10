@@ -14,10 +14,10 @@ public class BorrowRequest {
     private LocalDate startDate;
     private LocalDate endDate;
     private String reason;
-    private String deviceOrLabRoomId;
+    private Long deviceOrLabRoomId;
     private RequestStatus status;
 
-    public BorrowRequest(String id, String studentName, String studentCode, String email, Integer quantity, LocalDate startDate, LocalDate endDate, String reason, String deviceOrLabRoomId, RequestStatus status) {
+    public BorrowRequest(String id, String studentName, String studentCode, String email, Integer quantity, LocalDate startDate, LocalDate endDate, String reason, Long deviceOrLabRoomId, RequestStatus status) {
         this.id = id;
         this.studentName = studentName;
         this.studentCode = studentCode;
@@ -102,11 +102,11 @@ public class BorrowRequest {
         this.reason = reason;
     }
 
-    public String getDeviceOrLabRoomId() {
+    public Long getDeviceOrLabRoomId() {
         return deviceOrLabRoomId;
     }
 
-    public void setDeviceOrLabRoomId(String deviceOrLabRoomId) {
+    public void setDeviceOrLabRoomId(Long deviceOrLabRoomId) {
         this.deviceOrLabRoomId = deviceOrLabRoomId;
     }
 }

@@ -23,7 +23,7 @@ public class StudentController {
 
     @GetMapping("/form-borrow/{borrow_id}")
     public String showFormBorrow(
-            @PathVariable("borrow_id") String borrowId,
+            @PathVariable("borrow_id") Long borrowId,
             Model model) {
         BorrowRequestDTO borrowRequestDTO = new BorrowRequestDTO();
         borrowRequestDTO.setDeviceOrLabRoomId(borrowId);
@@ -33,7 +33,7 @@ public class StudentController {
 
     @PostMapping("/borrow/{borrow_id}")
     public String borrow(
-            @PathVariable("borrow_id") String borrowId,
+            @PathVariable("borrow_id") Long borrowId,
             @Valid @ModelAttribute("borrowDto") BorrowRequestDTO borrowRequestDTO,
             BindingResult bindingResult,
             Model model,
